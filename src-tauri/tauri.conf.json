@@ -1,0 +1,53 @@
+{
+  "build": {
+    "beforeDevCommand": "yarn dev",
+    "beforeBuildCommand": "yarn build",
+    "devPath": "http://localhost:1420",
+    "distDir": "../dist"
+  },
+  "package": {
+    "productName": "unity-launcher",
+    "version": "0.0.0"
+  },
+  "tauri": {
+    "allowlist": {
+      "all": true,
+      "shell": {
+        "all": true,
+        "scope": [
+          {
+            "name": "change-directory",
+            "cmd": "cd",
+            "args": true
+          }
+        ]
+      },
+      "fs": {
+        "scope": ["*/**"]
+      }
+    },
+    "windows": [
+      {
+        "title": "Unity Launcher",
+        "width": 800,
+        "height": 600,
+        "resizable": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+    },
+    "bundle": {
+      "active": true,
+      "targets": "all",
+      "identifier": "com.unity-launcher.dev",
+      "icon": [
+        "icons/32x32.png",
+        "icons/128x128.png",
+        "icons/128x128@2x.png",
+        "icons/icon.icns",
+        "icons/icon.ico"
+      ]
+    }
+  }
+}
