@@ -1,4 +1,3 @@
-import { Command } from '@tauri-apps/api/shell';
 import { UnityVersion } from '@/types';
 import { exists } from '@tauri-apps/api/fs';
 import { invoke } from '@tauri-apps/api';

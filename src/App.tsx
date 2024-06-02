@@ -29,7 +29,10 @@ function App() {
             </div>
             <footer className='mt-auto'>
               <Button className={buttonClass} asChild>
-                <a href='https://www.github.com/kazte' target='_blank'>
+                <a
+                  href='https://github.com/Kazte/unity-launcher-tauri'
+                  target='_blank'
+                >
                   <GitHubLogoIcon />
                   Github
                 </a>

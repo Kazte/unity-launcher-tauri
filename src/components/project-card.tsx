@@ -1,4 +1,4 @@
-import { CalendarIcon, PlayIcon, TrashIcon } from '@radix-ui/react-icons';
+import { PlayIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { Button } from './ui/button';
 import { Card } from './ui/card';
@@ -13,7 +13,7 @@ interface Props {
 export default function ProjectCard({ project }: Props) {
   const appStore = useAppStore((state) => state);
 
-  const { name, lastModified, path, unityVersion } = project;
+  const { name, unityVersion } = project;
 
   const handleClick = () => {
     openProject(project);

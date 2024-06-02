@@ -1,4 +1,4 @@
-import { ArchiveIcon, CalendarIcon, TrashIcon } from '@radix-ui/react-icons';
+import { ArchiveIcon, TrashIcon } from '@radix-ui/react-icons';
 
 import { Button } from './ui/button';
 import { Card } from './ui/card';
