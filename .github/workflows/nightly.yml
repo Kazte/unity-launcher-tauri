@@ -1,0 +1,58 @@
+name: Publish Nightly
+on:
+  push:
+    tags:
+      - 'v*'
+    branches:
+      - 'dev'
+
+jobs:
+  publish-tauri:
+    if: github.ref_type == 'tag' && startsWith(github.ref, 'refs/tags/v') && github.ref_name == 'dev'
+    permissions:
+      contents: write
+    strategy:
+      fail-fast: false
+      matrix:
+        settings:
+          - platform: windows-latest
+            args: "--verbose"
+            target: "windows"
+    runs-on: ${{ matrix.settings.platform }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Add Rust targets(macOS)
+        if: matrix.settings.target == 'macos-arm'
+        run: rustup target add aarch64-apple-darwin
+
+      - name: Rust setup
+        uses: dtolnay/rust-toolchain@stable
+      - name: Rust cache
+        uses: swatinem/rust-cache@v2
+        with:
+          workspaces: "./src-tauri -> target"
+
+      - name: setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version-file: '.nvmrc'
+      - name: remove lockfile
+        run: rm yarn.lock
+      - name: install frontend dependencies
+        run: yarn install
+
+      - name: Build app
+        uses: tauri-apps/tauri-action@dev
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          TAURI_PRIVATE_KEY: ${{ secrets.TAURI_PRIVATE_KEY }}
+          TAURI_KEY_PASSWORD: ${{ secrets.TAURI_KEY_PASSWORD }}
+        with:
+          args: ${{ matrix.settings.args }}
+          tagName: v__VERSION__
+          releaseName: unity-launcher-v__VERSION__-nightly
+          releaseBody: '.'
+          releaseDraft: true
+          prerelease: false
